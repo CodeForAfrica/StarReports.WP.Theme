@@ -14,7 +14,7 @@
 <title><?php wp_title( '|', true, 'right' ); ?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
-
+<link rel="stylesheet" href="<?php echo get_template_directory_uri().'/css/custom.css'; ?>">
 <?php wp_head(); ?>
 </head>
 
@@ -71,7 +71,7 @@
                                 <?php if( get_header_image() ): ?>
                                     <img src="<?php header_image(); ?>" alt="<?php bloginfo('name') ?>" />
                                 <?php else: ?>
-                                    <img src="<?php echo get_template_directory_uri().'/images/profitmag.png'; ?>" >
+                                    <img src="<?php echo get_template_directory_uri().'/images/logo.png'; ?>" >
                                 <?php endif; ?>
                             </a>
                         </div>
