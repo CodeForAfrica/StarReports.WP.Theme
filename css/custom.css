@@ -1,3 +1,12 @@
 .site-logo.f-left > a {
     padding-top: 0px !important;
 }
+body{
+    color: #58585B !important;
+    font-family: Georgia, "Times New Roman", Times, serif !important;
+    font-size: 15px !important;
+    background-color: #E5E4E3;
+    background-image: url(../images/topbar.jpg) !important;
+    background-repeat: repeat-x !important;
+    background-position: 0 -5px !important;
+}
