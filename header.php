@@ -29,6 +29,7 @@
 	<header id="masthead" class="site-header clearfix" role="banner">
         <div class="top-header-block clearfix">
             <div class="wrapper">
+
                         <?php 
                             $recent_args = array(
                                             'numberposts' => 5,
@@ -59,12 +60,17 @@
                         </div>
              </div>          
          </div><!-- .top-header-block -->
-
+        <header id="topbar">
+            <ul><li class="first leaf classic-105 mid-1819"><a href="http://www.ustream.tv/channel/classic105-kenya?utm_campaign=JPER&amp;utm_medium=FlashPlayer&amp;utm_source=embed" title="" target="_blank">Classic 105</a></li>
+                <li class="leaf east-fm mid-1822"><a href="http://www.ustream.tv/channel/east-fm?utm_campaign=JPER&amp;utm_medium=FlashPlayer&amp;utm_source=embed" title="" target="_blank">East fm</a></li>
+                <li class="leaf kiss-100 mid-1818"><a href="http://www.ustream.tv/channel/kiss100-kenya?utm_campaign=JPER&amp;utm_medium=FlashPlayer&amp;utm_source=embed" title="" target="_blank">Kiss 100</a></li>
+                <li class="leaf radio-jambo mid-1820"><a href="http://www.ustream.tv/channel/radiojambo-fm?utm_campaign=JPER&amp;utm_medium=FlashPlayer&amp;utm_source=embed" title="" target="_blank">Radio Jambo</a></li>
+                <li class="last leaf xfm mid-1821"><a href="http://www.ustream.tv/channel/xfm-kenya?utm_campaign=JPER&amp;utm_medium=FlashPlayer&amp;utm_source=embed" title="" target="_blank">XFM</a></li>
+            </ul>
+        </header>
         <div class="wrapper header-wrapper clearfix">
-        		<div class="header-container"> 
-                
-                    
-                    
+
+        		<div class="header-container">
                     <div class="site-branding clearfix">
             			<div class="site-logo f-left">
                             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
