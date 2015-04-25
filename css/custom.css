@@ -12,4 +12,14 @@ body{
 }
 .wrapper{
     width: 990px !important;
+    padding: 0 15px !important;
+}
+.slider-section {
+    width: 450px !important;
+}
+.slider-desc {
+    padding-bottom: 0px !important;
+}
+.slider-section .bx-wrapper img{
+    height: 365px;
 }
