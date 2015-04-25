@@ -10,3 +10,6 @@ body{
     background-repeat: repeat-x !important;
     background-position: 0 -5px !important;
 }
+.wrapper{
+    width: 990px !important;
+}
