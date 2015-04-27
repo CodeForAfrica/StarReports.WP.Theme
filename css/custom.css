@@ -69,3 +69,63 @@ body{
     padding: 5px !important;
     padding-bottom: 0px !important;
 }
+.date-section {
+    float: right;
+    margin-bottom: 5px;
+}
+.download_app{
+    color:#fff;
+    padding: 5px;
+    display: inline-block;
+}
+.download_app img{
+    height:15px;
+}
+#primary {
+    width: 100% !important;
+}
+.right_sidebar .secondary-sidebar {
+    display: none;
+}
+
+
+
+.df{
+height: 39px;
+background-color: #404041;
+font-family: 'Open Sans', sans-serif;
+color: #fff;
+text-transform: uppercase;
+padding-top: 8px;
+}
+.header-wrapper #site-navigation {
+    background: #404041 !important;
+    border-bottom: 0px !important;
+    min-height: 41px !important;
+    font-family: 'Open Sans', sans-serif !important;
+}
+.header-wrapper .menu li a {
+    color: #ffffff;
+    display: block;
+    font-size: 16px;
+    font-weight: bold !important;
+    line-height: 39px !important;
+    padding: 0 33px;
+    text-transform: uppercase;
+}
+li:hover, .header-wrapper .menu li.current-menu-item {
+    background: #D82C2D !important;
+}
+.header-wrapper .menu li:hover:before, .header-wrapper .menu li.current-menu-item:before {
+    display: none;
+}
+.header-wrapper .menu li {
+    background: none !important;
+}
+.header-wrapper .main-navigation ul ul.sub-menu {
+    top: 41px !important;
+    background: white !important;
+}
+.sub-menu a{
+    color: #404041 !important;
+}
