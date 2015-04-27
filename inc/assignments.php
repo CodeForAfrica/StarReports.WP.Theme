@@ -33,7 +33,7 @@ function assignment() {
         'description'   => 'Defines assignment structure',
         'public'        => true,
         'menu_position' => 6,
-        'supports'      => array( 'title', 'editor', 'revisions'),
+        'supports'      => array( 'title', 'editor', 'revisions', 'thumbnail'),
         'has_archive'   => true,
     );
     register_post_type( 'assignment', $args );
@@ -533,6 +533,45 @@ function assignment_responses_box_content( $post ) {
     <?php endwhile;
     print "</ul>";
 }
+//add end date meta box
+add_action( 'add_meta_boxes', 'assignment_date_box' );
+function assignment_date_box() {
+    add_meta_box(
+        'assignment_date_box',
+        __( 'Assignment End Date', 'myplugin_textdomain' ),
+        'assignment_date_box_content',
+        'assignment',
+        'side',
+        'high'
+    );
+}
+function assignment_date_box_content( $post ) {
+    wp_nonce_field( plugin_basename( __FILE__ ), 'assignment_date_box_content_nonce' );
+    $date = get_post_meta( get_the_ID(), 'assignment_date', true);
+
+    echo '<input type="date" id="assignment_date" name="assignment_date"  value="'.$date.'" placeholder="End Date"/>';
+}
+add_action( 'save_post', 'assignment_date_box_save' );
+
+function assignment_date_box_save( $post_id ) {
+
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+        return;
+
+    if ( !wp_verify_nonce( $_POST['assignment_date_box_content_nonce'], plugin_basename( __FILE__ ) ) )
+        return;
+
+    if ( 'page' == $_POST['post_type'] ) {
+        if ( !current_user_can( 'edit_page', $post_id ) )
+            return;
+    } else {
+        if ( !current_user_can( 'edit_post', $post_id ) )
+            return;
+    }
+    $assignment_date = $_POST['assignment_date'];
+    update_post_meta( $post_id, 'assignment_date', $assignment_date );
+}
+
 
 //add bounty meta data
 add_action( 'add_meta_boxes', 'assignment_bounty_box' );
@@ -558,6 +597,7 @@ function assignment_bounty_box_content( $post ) {
 }
 
 add_action( 'save_post', 'assignment_bounty_box_save' );
+
 function assignment_bounty_box_save( $post_id ) {
 
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
