@@ -149,7 +149,9 @@
     
 
     <div class="wrapper content-wrapper clearfix">
-
+        <?php
+            if(is_home() || is_front_page() ){
+        ?>
         <div class="slider-feature-wrap clearfix">
             <!-- Slider -->
             <?php //do_action( 'profitmag_slider' ); ?>
@@ -228,14 +230,16 @@
                         ?>
 
                     </div><!-- .beides-block -->
-            <?php
-            	if(is_home() || is_front_page() ){
-            	    $profitmag_content_id = "home-content";
-            	}else{
-            	    $profitmag_content_id ="content";
-            	} 
-             ?>
-        </div>    
+
+        </div>
+        <?php
+            }
+        if(is_home() || is_front_page() ){
+            $profitmag_content_id = "home-content";
+        }else{
+            $profitmag_content_id ="content";
+        }
+        ?>
             <div id="<?php echo $profitmag_content_id; ?>" class="site-content">
     
    
