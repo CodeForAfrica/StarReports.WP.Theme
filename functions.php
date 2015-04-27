@@ -91,7 +91,52 @@ function profitmag_record_views($postID) {
         update_post_meta($postID, $count_key, $count);
     }
 }
+function timeBetweenNowAndDeadline($deadline) {
+    $currentDate = date("U");
+    $deadline = strtotime($deadline);
+    $diff = $currentDate-$deadline;
+    $seconds = 0;
+    $hours   = 0;
+    $minutes = 0;
 
+    if($diff % 86400 <= 0){$days = $diff / 86400;}  // 86,400 seconds in a day
+    if($diff % 86400 > 0)
+    {
+        $rest = ($diff % 86400);
+        $days = ($diff - $rest) / 86400;
+        if($rest % 3600 > 0)
+        {
+            $rest1 = ($rest % 3600);
+            $hours = ($rest - $rest1) / 3600;
+            if($rest1 % 60 > 0)
+            {
+                $rest2 = ($rest1 % 60);
+                $minutes = ($rest1 - $rest2) / 60;
+                $seconds = $rest2;
+            }
+            else{$minutes = $rest1 / 60;}
+        }
+        else{$hours = $rest / 3600;}
+    }
+    if($days > 0){
+        return $days." days";
+    }elseif($days == 0){
+        return "Due today";
+    }else{
+        return "Deadline passed!";
+    }
+    /*
+    if($days > 0){$days = $days.'d, ';}
+    else{$days = false;}
+    if($hours > 0){$hours = $hours.'h, ';}
+    else{$hours = false;}
+    if($minutes > 0){$minutes = $minutes.'m, ';}
+    else{$minutes = false;}
+    $seconds = $seconds.'s';
+    */
+
+    //return $days.''.$hours.''.$minutes.''.$seconds;
+}
 
 // Resize images
 if ( function_exists( 'add_image_size' ) ) { 

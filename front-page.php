@@ -24,36 +24,69 @@ if( 'page' == get_option( 'show_on_front' ) ) {
                         if(sizeof($posts_array)<1){
                             print "<h2>No open assignments</h2>";
                         }
-
+                        $i=0;
                         foreach($posts_array as $p){
+                            $i++;
                             ?>
                             <div class="featured-post clearfix">
+                                <?php
+
+                                    $address = get_post_meta( $p->ID, 'assignment_address', true);
+
+                                    // args
+                                    $args = array(
+                                        'post_type' => 'post',
+                                        'meta_key' => 'assignment_id',
+                                        'meta_value' => $p->ID
+                                    );
+                                    $responses = get_posts( $args );
+                                    $responses = sizeof($responses);
+                                ?>
+                                <div class="contributors-icon"><i class="fa fa-users"></i> <?php print $responses;?></div>
+
+                                <h3 class="feature-main-title<?php if($i%2==0)echo ' feature-main-title-even';?>"><a href="#"><?php print $p->post_title;?></a> </h3>
+
                                 <figure class="post-thumb clearfix">
                                     <?php echo get_the_post_thumbnail( $p->ID, 300, 'thumbnail' );?>
                                 </figure>
                                 
                                 <div class="post-desc clearfix">
-                                    <h3 class="feature-main-title"><a href="#"><?php print $p->post_title;?></a></h3>
-                                    <div class="post-date feature-main-date"><i class="fa fa-calendar"></i>October 31, 2014</div>
+
                                     <?php
-                                        $address = get_post_meta( $p->ID, 'assignment_address', true);
+                                        $assignment_type = get_post_meta( $p->ID, 'assignment_type', true);
 
-                                        // args
-                                        $args = array(
-                                            'post_type' => 'post',
-                                            'meta_key' => 'assignment_id',
-                                            'meta_value' => $post->ID
-                                        );
-                                        $responses = sizeof(new WP_Query( $args ));
+                                        print '<div class="feature-main-icons">';
+                                        $assignment_type = get_post_meta( $p->ID, 'assignment_type', true);
+                                        if(in_array("image", $assignment_type)){
+                                            print '<i class="fa fa-camera"></i>';
+                                        }
+                                        if(in_array("video", $assignment_type)){
+                                            print '<i class="fa fa-video-camera"></i>';
+                                        }
+                                        if(in_array("audio", $assignment_type)){
+                                            print '<i class="fa fa-microphone"></i>';
+                                        }
+                                        if(in_array("narrative", $assignment_type)){
+                                            print '<i class="fa fa-edit"></i>';
+                                        }
+                                        print '</div>';
 
-                                        $assignment_type = get_post_meta( get_the_ID(), 'assignment_type', true);
-
-
-                                    ?>
+                                        //date
+                                        $end_date = get_post_meta( $p->ID, 'assignment_date', true);
+                                        print '<div class="post-date feature-main-date"><i class="fa fa-clock-o"></i> ';
+                                        if(!empty($end_date)){
+                                           $end_date = timeBetweenNowAndDeadline($end_date);
+                                            print $end_date;
+                                        }else{
+                                            print "Open Ended";
+                                        }
+                                        print '</div>';
+                                        ?>
                                 </div>
                             </div>
                         <?php
                         }
+
                         ?>
                     </div>
             </div>      

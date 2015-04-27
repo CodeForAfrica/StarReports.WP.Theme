@@ -452,7 +452,7 @@ function assignment_location_box_content( $post ) {
         google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
-    <input id="pac-input" class="controls" type="text" name="loc_address"
+    <input id="pac-input" class="controls" type="text" name="loc_address" value="<?php echo $address;?>"
            placeholder="Enter a location">
 
     <div id="type-selector" class="controls">
@@ -496,6 +496,7 @@ function assignment_location_box_save( $post_id ) {
     $assignment_address = $_POST['loc_address'];
 
     update_post_meta( $post_id, 'assignment_location', $assignment_location );
+
     if($assignment_address!=""){
         update_post_meta( $post_id, 'assignment_address', $assignment_address );
     }
@@ -549,7 +550,8 @@ function assignment_date_box_content( $post ) {
     wp_nonce_field( plugin_basename( __FILE__ ), 'assignment_date_box_content_nonce' );
     $date = get_post_meta( get_the_ID(), 'assignment_date', true);
 
-    echo '<input type="date" id="assignment_date" name="assignment_date"  value="'.$date.'" placeholder="End Date"/>';
+    echo '<input type="date" id="assignment_date" name="assignment_date"  value="'.$date.'"/>';
+    print "<br /> Leave blank if open ended*";
 }
 add_action( 'save_post', 'assignment_date_box_save' );
 

@@ -126,3 +126,35 @@ li:hover, .header-wrapper .menu li.current-menu-item {
 .wrapper{
     box-shadow: 0px 1px 8px 5px rgba(0,0,0,0.1);
 }
+.feature-main-title-even{
+    background:#D82C2D !important;
+}
+.feature-main-title {
+    background: #004689;
+    padding: 5px;
+    height: 80px;
+    color: #fff;
+    margin-bottom:-20px !important;
+}
+.feature-main-icons{
+    float:right;
+    display: inline-block;
+}
+.feature-main-date{
+    display: inline-block;
+}
+.post-desc {
+    background: rgb(234, 234, 234);
+    padding: 10px;
+    margin-top: -12px;
+}
+.featured-post .post-thumb img {
+    height: 200px !important;
+}
+.contributors-icon{
+    float: right;
+    margin-top: 30px;
+    color:white;
+    font-size: 15px;
+    margin-right: 5px;
+}
