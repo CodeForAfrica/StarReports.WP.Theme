@@ -201,3 +201,6 @@ li:hover, .header-wrapper .menu li.current-menu-item {
     color: #FFDD17;
     text-decoration: underline;
 }
+.beside-thumb img{
+    height: 172px !important;
+}

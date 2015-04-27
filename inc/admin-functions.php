@@ -12,6 +12,7 @@ function post_featured_box() {
         'high'
     );
 }
+
 function post_featured_box_content( $post ) {
     wp_nonce_field( plugin_basename( __FILE__ ), 'post_featured_box_content_nonce' );
     $post_featured = get_post_meta( get_the_ID(), 'post_featured', true);
@@ -41,6 +42,7 @@ function post_featured_box_save( $post_id ) {
     $post_featured = $_POST['post_featured'];
     update_post_meta( $post_id, 'post_featured', $post_featured );
 }
+
 //add post assignment
 add_action( 'add_meta_boxes', 'post_assignment_box' );
 function post_assignment_box() {
@@ -53,6 +55,7 @@ function post_assignment_box() {
         'high'
     );
 }
+
 function post_assignment_box_content( $post ) {
     wp_nonce_field( plugin_basename( __FILE__ ), 'post_assignment_box_content_nonce' );
     $post_assignment= get_post_meta( get_the_ID(), 'assignment_id', true);

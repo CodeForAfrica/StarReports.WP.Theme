@@ -3,11 +3,12 @@ $profitmag_settings = get_option( 'profitmag_options' );
 if( 'page' == get_option( 'show_on_front' ) ) {
     include( get_page_template() );
 }else {
-    get_header();          
+    get_header();
 ?>
+
+
 <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-
                <div class="home-featured-block">                
                         <h2 class="block-title"><span class="bordertitle-red"></span>Latest Assignments</h2>
                         <div class="feature-post-wrap clearfix">
@@ -28,6 +29,7 @@ if( 'page' == get_option( 'show_on_front' ) ) {
                         foreach($posts_array as $p){
                             $i++;
                             ?>
+                            <a href="<?php echo $p->guid;?>">
                             <div class="featured-post clearfix">
                                 <?php
 
@@ -44,7 +46,7 @@ if( 'page' == get_option( 'show_on_front' ) ) {
                                 ?>
                                 <div class="contributors-icon"><i class="fa fa-users"></i> <?php print $responses;?></div>
 
-                                <h3 class="feature-main-title<?php if($i%2==0)echo ' feature-main-title-even';?>"><a href="#"><?php print $p->post_title;?></a> </h3>
+                                <h3 class="feature-main-title<?php if($i%2==0)echo ' feature-main-title-even';?>"><?php print $p->post_title;?></h3>
 
                                 <figure class="post-thumb clearfix">
                                     <?php echo get_the_post_thumbnail( $p->ID, 300, 'thumbnail' );?>
@@ -84,6 +86,7 @@ if( 'page' == get_option( 'show_on_front' ) ) {
                                         ?>
                                 </div>
                             </div>
+                            </a>
                         <?php
                         }
 
@@ -110,13 +113,13 @@ if( 'page' == get_option( 'show_on_front' ) ) {
                 foreach($posts_array as $p){
                     $i++;
                     ?>
-                    <div class="featured-post clearfix">
+                    <a href="<?php echo $p->guid;?>">
+                        <div class="featured-post clearfix">
 
-                        <h3 class="feature-main-title<?php if($i%2==0)echo ' feature-main-title-even';?>"><a href="#"><?php print $p->post_title;?></a> </h3>
-
+                        <h3 class="feature-main-title<?php if($i%2==0)echo ' feature-main-title-even';?>"><?php print $p->post_title;?> </h3>
                         <figure class="post-thumb clearfix">
                             <?php echo get_the_post_thumbnail( $p->ID, 300, 'thumbnail' );?>
-                        </figure>
+                        </figure></a>
 
                         <div class="post-desc clearfix">
                             <?php
@@ -125,7 +128,7 @@ if( 'page' == get_option( 'show_on_front' ) ) {
                             print '<div class="post-date feature-main-date"><i class="fa fa-calendar"></i>'.get_the_date( 'F d, Y').'</div>';
                             ?>
                         </div>
-                    </div>
+                    </div></a>
                 <?php
                 }
 

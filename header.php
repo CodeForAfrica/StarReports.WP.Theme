@@ -152,16 +152,87 @@
 
         <div class="slider-feature-wrap clearfix">
             <!-- Slider -->
-            <?php do_action( 'profitmag_slider' ); ?>
-            
-            <!-- Featured Post Beside Slider -->
-            <?php do_action( 'profitmag_featured_post_beside' ); ?>
-        	
+            <?php //do_action( 'profitmag_slider' ); ?>
+                    <!-- Slider -->
+                    <script type="text/javascript">
+                        jQuery(document).ready(function() {
+
+                            jQuery('.home-bxslider').bxSlider( {
+                                pager: false,
+                                auto: true,
+
+                            });
+                        })
+                    </script>
+                    <!--Get featured posts -->
+                    <?php
+                    $args = array(
+                        'posts_per_page'   => 5,
+                        'orderby'          => 'post_date',
+                        'order'            => 'DESC',
+                        'post_type'        => 'post',
+                        'post_status'      => 'publish',
+                        'meta_key'        => 'post_featured',
+                        'meta_value'        => '1',
+                        'suppress_filters' => true
+                    );
+                    $posts_array = get_posts( $args );
+                    ?>
+                    <div class="slider-section">
+                        <ul class="home-bxslider">
+                            <?php
+                                $i = 0;
+                                foreach($posts_array as $p){
+                                    if($i==0){
+                                        print '<li><a href="'.$p->guid.'">
+                                            '.get_the_post_thumbnail( $p->ID, 400, 'thumbnail' ).'
+                                            <div class="slider-desc">
+                                                <div class="slide-date">
+                                                    <i class="fa fa-calendar"></i>'.$p->post_date.'
+                                                </div>
+                                                <div class="slider-details">
+                                                    <div class="slide-title">'.$p->post_title.'</div>
+                                                    <div class="slide-caption"></div>
+                                                </div>
+                                            </div></a>
+                                        </li>';
+                                    }
+                                    $i++;
+                                }
+                            ?>
+                        </ul>
+                    </div>
+
+                    <!-- Featured Post Beside Slider -->
+                    <div class="besides-block">
+                        <?php
+                        $i = 0;
+                        //print_r($posts_array);
+                        foreach($posts_array as $p){
+                            if($i>0){
+                                print'<div class="beside-post clearfix">
+                            <a href="'.$p->guid.'">
+                                <figure class="beside-thumb clearfix">
+                                    '.get_the_post_thumbnail( $p->ID, 300, 'thumbnail' ).'
+                                    <div class="overlay"></div>
+                                </figure>
+                                <div class="beside-caption clearfix">
+                                    <h3 class="post-title">'.$p->post_title.'</h3>
+                                    <div class="post-date"><i class="fa fa-calendar"></i>'.$p->post_date.'</div>
+                                </div>
+                            </a>
+                        </div>';
+                            }
+                            $i++;
+                        }
+                        ?>
+
+                    </div><!-- .beides-block -->
             <?php
             	if(is_home() || is_front_page() ){
-            	$profitmag_content_id = "home-content";
+            	    $profitmag_content_id = "home-content";
             	}else{
-            	$profitmag_content_id ="content";
+            	    $profitmag_content_id ="content";
             	} 
              ?>
         </div>    
