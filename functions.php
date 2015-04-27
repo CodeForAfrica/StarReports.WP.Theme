@@ -153,3 +153,7 @@ require get_template_directory().'/inc/profitmag-functions.php';
  * Implement Custom Widgets
  */
 require get_template_directory().'/inc/profitmag-widgets.php';
+/**
+ * Assignemts
+ */
+require get_template_directory().'/inc/assignments.php';

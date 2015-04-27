@@ -16,7 +16,7 @@
 	</header><!-- .entry-header -->
 
 	<div class="post-thumb">
-        <?php 
+        <?php
             if( has_post_thumbnail() ):
                 $image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'archive-thumb' );
         ?>
@@ -25,11 +25,11 @@
             endif;
         ?>
     </div>
-    
-    
+
+
     <div class="entry-content">
 		<?php
-			the_excerpt();            
+			the_excerpt();
 		?>
 		<a class="read-more" href="<?php echo get_permalink( get_the_ID() ); ?> "><?php _e('Read More', 'profitmag'); ?></a>
 
