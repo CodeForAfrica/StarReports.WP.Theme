@@ -89,7 +89,49 @@ if( 'page' == get_option( 'show_on_front' ) ) {
 
                         ?>
                     </div>
-            </div>      
+            </div>
+        <div class="home-featured-block">
+            <h2 class="block-title"><span class="bordertitle-red"></span>Recent Submissions</h2>
+            <div class="feature-post-wrap clearfix">
+                <?php
+                $args = array(
+                    'posts_per_page'   => 10,
+                    'orderby'          => 'post_date',
+                    'order'            => 'DESC',
+                    'post_type'        => 'post',
+                    'post_status'      => 'publish',
+                    'suppress_filters' => true
+                );
+                $posts_array = get_posts( $args );
+                if(sizeof($posts_array)<1){
+                    print "<h2>No posts available</h2>";
+                }
+                $i=0;
+                foreach($posts_array as $p){
+                    $i++;
+                    ?>
+                    <div class="featured-post clearfix">
+
+                        <h3 class="feature-main-title<?php if($i%2==0)echo ' feature-main-title-even';?>"><a href="#"><?php print $p->post_title;?></a> </h3>
+
+                        <figure class="post-thumb clearfix">
+                            <?php echo get_the_post_thumbnail( $p->ID, 300, 'thumbnail' );?>
+                        </figure>
+
+                        <div class="post-desc clearfix">
+                            <?php
+                            //date
+                            $end_date = get_post_meta( $p->ID, 'assignment_date', true);
+                            print '<div class="post-date feature-main-date"><i class="fa fa-calendar"></i>'.get_the_date( 'F d, Y').'</div>';
+                            ?>
+                        </div>
+                    </div>
+                <?php
+                }
+
+                ?>
+            </div>
+        </div>
 
     </main><!-- #main -->
 </div><!-- #primary -->
