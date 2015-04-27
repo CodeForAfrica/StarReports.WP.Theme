@@ -202,3 +202,7 @@ require get_template_directory().'/inc/profitmag-widgets.php';
  * Assignemts
  */
 require get_template_directory().'/inc/assignments.php';
+/*
+ * Admin Modifications
+ */
+require get_template_directory().'/inc/admin-functions.php';
