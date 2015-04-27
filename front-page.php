@@ -9,7 +9,7 @@ if( 'page' == get_option( 'show_on_front' ) ) {
 
 <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-               <div class="home-featured-block">                
+               <div class="home-featured-block">
                         <h2 class="block-title"><span class="bordertitle-red"></span>Latest Assignments</h2>
                         <div class="feature-post-wrap clearfix">
                         <?php
@@ -51,7 +51,7 @@ if( 'page' == get_option( 'show_on_front' ) ) {
                                 <figure class="post-thumb clearfix">
                                     <?php echo get_the_post_thumbnail( $p->ID, 300, 'thumbnail' );?>
                                 </figure>
-                                
+
                                 <div class="post-desc clearfix">
 
                                     <?php
@@ -138,11 +138,11 @@ if( 'page' == get_option( 'show_on_front' ) ) {
 
     </main><!-- #main -->
 </div><!-- #primary -->
-                    
-<?php get_sidebar( 'right' ); ?>
-    
-<?php get_footer(); ?>  
 
-<?php    
+<?php get_sidebar( 'right' ); ?>
+
+<?php get_footer(); ?>
+
+<?php
 };
 ?>

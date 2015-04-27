@@ -204,3 +204,6 @@ li:hover, .header-wrapper .menu li.current-menu-item {
 .beside-thumb img{
     height: 172px !important;
 }
+.content-area{
+    padding:12px;
+}
