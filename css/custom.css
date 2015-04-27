@@ -161,3 +161,43 @@ li:hover, .header-wrapper .menu li.current-menu-item {
 .block-title {
     padding: 12px !important;
 }
+#footer {
+    background-color: #184B99;
+    color: #FFFFFF;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 20px;overflow: hidden;
+}
+.bcolumn {
+    margin: 10px;
+    min-height: 230px;
+    padding-left: 10px;
+    background-image: url(../images/bcoumnbg.png);
+    background-repeat: repeat;
+    overflow: hidden;
+}
+.bcolumn a{
+    color: #fff !important;
+    font-size: 0.8em;
+}
+.col-md-12 {
+        width: 100%;
+}
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+        float: left;
+}
+#footer .row {
+    background-color: #184B99;
+}
+.col-md-2 {
+    width: 16.66666667%;
+}
+#copyright{
+    font-size: 0.9em;
+    text-align: center;
+}
+#copyright a {
+    color: #FFDD17;
+    text-decoration: underline;
+}
