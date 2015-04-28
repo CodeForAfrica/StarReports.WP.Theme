@@ -940,4 +940,25 @@ function mw_getPostsByKeyword($args) {
 
 }
 
+function assignmentIcons($post_id){
+    $html = "";
+
+    $assignment_type = get_post_meta( $post_id, 'assignment_type', true);
+
+    if(in_array("image", $assignment_type)){
+        $html .= '<i class="fa fa-camera"></i>';
+    }
+    if(in_array("video", $assignment_type)){
+        $html .= '<i class="fa fa-video-camera"></i>';
+    }
+    if(in_array("audio", $assignment_type)){
+        $html .= '<i class="fa fa-microphone"></i>';
+    }
+    if(in_array("narrative", $assignment_type)){
+        $html .= '<i class="fa fa-edit"></i>';
+    }
+
+    return $html;
+}
+
 ?>

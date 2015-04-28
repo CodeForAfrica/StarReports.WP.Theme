@@ -14,9 +14,6 @@ get_header(); ?>
 		<?php while ( have_posts() ) : the_post(); ?>
 
 			<?php get_template_part( 'content', 'single' ); ?>
-
-			
-
             <?php profitmag_record_views(get_the_ID()); // Record post view?>
 		<?php endwhile; // end of the loop. ?>
 

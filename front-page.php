@@ -55,26 +55,12 @@ if( 'page' == get_option( 'show_on_front' ) ) {
                                 <div class="post-desc clearfix">
 
                                     <?php
-                                        $assignment_type = get_post_meta( $p->ID, 'assignment_type', true);
-
-                                        print '<div class="feature-main-icons">';
-                                        $assignment_type = get_post_meta( $p->ID, 'assignment_type', true);
-                                        if(in_array("image", $assignment_type)){
-                                            print '<i class="fa fa-camera"></i>';
-                                        }
-                                        if(in_array("video", $assignment_type)){
-                                            print '<i class="fa fa-video-camera"></i>';
-                                        }
-                                        if(in_array("audio", $assignment_type)){
-                                            print '<i class="fa fa-microphone"></i>';
-                                        }
-                                        if(in_array("narrative", $assignment_type)){
-                                            print '<i class="fa fa-edit"></i>';
-                                        }
-                                        print '</div>';
+                                        //show assignment icons
+                                        print '<div class="feature-main-icons">'.assignmentIcons($p->ID).'</div>';
 
                                         //date
                                         $end_date = get_post_meta( $p->ID, 'assignment_date', true);
+
                                         print '<div class="post-date feature-main-date"><i class="fa fa-clock-o"></i> ';
                                         if(!empty($end_date)){
                                            $end_date = timeBetweenNowAndDeadline($end_date);

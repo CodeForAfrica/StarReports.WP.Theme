@@ -207,3 +207,13 @@ li:hover, .header-wrapper .menu li.current-menu-item {
 .content-area{
     padding:12px;
 }
+.single-thumb img{
+    width: 400px !important;
+}
+.assignment_icons .fa{
+    font-size: 3em !important;
+}
+.single-thumb {
+    width: 400px !important;
+    margin-right: 30px !important;
+}
