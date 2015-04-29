@@ -359,7 +359,7 @@ function post_assignment_box_content( $post ) {
         if($post_assignment == $a->ID){
             print " selected";
         }
-        print">".$a->post_title."</option>";
+        print" value='".$a->ID."'>".$a->post_title."</option>";
     }
     ?>
     <?php

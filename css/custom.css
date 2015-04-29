@@ -230,3 +230,6 @@ li:hover, .header-wrapper .menu li.current-menu-item {
     padding: 10px;
     text-align: center;
 }
+.header-wrapper .menu li a {
+    padding: 0 15px;
+}
