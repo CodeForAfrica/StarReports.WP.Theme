@@ -205,4 +205,4 @@ require get_template_directory().'/inc/assignments.php';
 /*
  * Admin Modifications
  */
-require get_template_directory().'/inc/admin-functions.php';
+require get_template_directory().'/inc/dashboard.php';

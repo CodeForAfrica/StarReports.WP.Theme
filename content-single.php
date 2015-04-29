@@ -26,7 +26,7 @@
                 <?php  profitmag_posted_on(); ?>
             </div><!-- .entry-meta -->
 
-            <div class="assignment-icons">
+            <div class="assignment-icons"<?php if(!is_singular('assignment')) print " style='display:none;'";?>>
                 <div class="icons-bit">
                     <?php print assignmentIcons(get_the_ID());?>
                 </div>
@@ -75,7 +75,7 @@
 	</div>
     <?php edit_post_link( __( 'Edit', 'profitmag' ), '<span class="edit-link">', '</span>' ); ?>
     <!-- .entry-content -->
-    <div class="home-featured-block">
+    <div class="home-featured-block"<?php if(!is_singular('assignment')) print " style='display:none;'";?>>
         <h2 class="block-title"><span class="bordertitle-red"></span>Contributions</h2>
     <div class="feature-post-wrap clearfix">
         <?php
@@ -135,9 +135,5 @@
 				<?php printf( __( 'Tagged %1$s', 'profitmag' ), $tags_list ); ?>
 			</span>
 			<?php endif; // End if $tags_list ?>
-
-
-
-		<?php edit_post_link( __( 'Edit', 'profitmag' ), '<span class="edit-link">', '</span>' ); ?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->
