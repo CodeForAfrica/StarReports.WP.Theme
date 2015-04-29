@@ -9,13 +9,12 @@
  
 $profitmag_settings = get_option( 'profitmag_options' );
 ?>
-
 	</div><!-- #content -->
+
     </div><!-- content-wrapper-->
-
 	<footer id="colophon" class="site-footer clearrfix" role="contentinfo">
-        <div class="wrapper footer-wrapper clearfix">
 
+        <div class="wrapper footer-wrapper clearfix">
             <div class="row" id="footer">
 
                 <div class="col-md-12">
@@ -219,16 +218,18 @@ $profitmag_settings = get_option( 'profitmag_options' );
                                 </script>  </div>
                         </div>
                     </div>
-                </div>
+
+                    <div class="credit">
+                        <a href="http://codeforafrica.org" target="_blank"><span class="credit-text">Built by</span>
+                            <img src="<?php echo get_template_directory_uri();?>/images/cfafrica.png"></a>
+                    </div>
                 <!-- /copyright -->
-
             </div>
-
         </div><!-- footer-wrapper-->
+        </div>
 	</footer><!-- #colophon -->
 </div><!-- #page -->
 
 <?php wp_footer(); ?>
-
 </body>
 </html>

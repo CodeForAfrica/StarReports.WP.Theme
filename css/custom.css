@@ -233,3 +233,22 @@ li:hover, .header-wrapper .menu li.current-menu-item {
 .header-wrapper .menu li a {
     padding: 0 15px;
 }
+.credit{
+    border-top: 1px solid rgb(226, 226, 226);
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+    height: 80px;
+    margin: 10px;
+}
+.credit img{
+    height:60px;
+    vertical-align:middle
+}
+.credit-text{
+    font-size: 1.2em;
+    color: #184B99;
+}
+.credit a{
+    text-decoration: none !important;
+}
