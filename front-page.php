@@ -10,7 +10,7 @@ if( 'page' == get_option( 'show_on_front' ) ) {
 <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
                <div class="home-featured-block">
-                        <h2 class="block-title"><span class="bordertitle-red"></span>Latest Assignments</h2>
+                       <h2 class="block-title"><span class="bordertitle-red"></span>Latest Assignments</h2>
                         <div class="feature-post-wrap clearfix">
                         <?php
                         $args = array(

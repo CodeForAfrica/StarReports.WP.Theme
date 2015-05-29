@@ -76,8 +76,13 @@
     <?php edit_post_link( __( 'Edit', 'profitmag' ), '<span class="edit-link">', '</span>' ); ?>
     <!-- .entry-content -->
     <div class="home-featured-block"<?php if(!is_singular('assignment')) print " style='display:none;'";?>>
+
+        <div class="contrib_button">
+            <a href="https://play.google.com/store/apps/details?id=org.codeforafrica.starreports" target="_blank"><img src="<?php bloginfo('template_directory'); ?>/images/gplay.png"> Use the Android app to contribute</a>
+        </div>
         <h2 class="block-title"><span class="bordertitle-red"></span>Contributions</h2>
-    <div class="feature-post-wrap clearfix">
+
+        <div class="feature-post-wrap clearfix">
         <?php
         $args = array(
             'post_type' => 'post',

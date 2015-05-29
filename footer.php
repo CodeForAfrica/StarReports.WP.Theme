@@ -142,6 +142,13 @@ $profitmag_settings = get_option( 'profitmag_options' );
                 </div>
 
                 <div class="col-md-12 text-center" id="copyright"><!-- copyright -->
+
+
+                    <div class="credit">
+                        <a href="http://codeforafrica.org" target="_blank"><span class="credit-text">Built by </span>
+                            <img src="<?php echo get_template_directory_uri();?>/images/cfafrica.png"></a>
+                    </div>
+
                     <div class="region region-footer-bottom">
                         <div id="block-block-5" class="block block-block block-even">
 
@@ -217,11 +224,6 @@ $profitmag_settings = get_option( 'profitmag_options' );
                                     }(document, 'script', 'facebook-jssdk'));
                                 </script>  </div>
                         </div>
-                    </div>
-
-                    <div class="credit">
-                        <a href="http://codeforafrica.org" target="_blank"><span class="credit-text">Built by</span>
-                            <img src="<?php echo get_template_directory_uri();?>/images/cfafrica.png"></a>
                     </div>
                 <!-- /copyright -->
             </div>

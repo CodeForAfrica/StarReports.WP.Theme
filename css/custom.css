@@ -120,9 +120,6 @@ li:hover, .header-wrapper .menu li.current-menu-item {
 .sub-menu a{
     color: #404041 !important;
 }
-.header-container{
-    box-shadow: 0px 1px 8px 5px rgba(0,0,0,0.1);
-}
 .wrapper{
     box-shadow: 0px 1px 8px 5px rgba(0,0,0,0.1);
 }
@@ -236,19 +233,37 @@ li:hover, .header-wrapper .menu li.current-menu-item {
 .credit{
     border-top: 1px solid rgb(226, 226, 226);
     text-align: center;
-    padding: 10px;
+    padding: 5px;
     background-color: #fff;
     height: 80px;
     margin: 10px;
 }
 .credit img{
-    height:60px;
+    height:70px;
     vertical-align:middle
 }
 .credit-text{
-    font-size: 1.2em;
+    font-size: 1.4em;
     color: #184B99;
 }
 .credit a{
     text-decoration: none !important;
+}
+.contrib_button{
+    border-radius: 5px;
+    background: #D82C2D;
+    padding: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 400px;
+    margin: 0 auto;
+}
+.contrib_button a{
+    color: #fff;
+}
+.contrib_button a:hover{
+    color: #bbbbbb !important;
+}
+.contrib_button img{
+    height:15px;
 }
