@@ -681,6 +681,7 @@ function mw_getRecentAssignments($args) {
 
         // Get the post author info.
         $author = get_userdata($entry['post_author']);
+	$author_email = $author->user_email;
 
         $allow_comments = ('open' == $entry['comment_status']) ? 1 : 0;
         $allow_pings = ('open' == $entry['ping_status']) ? 1 : 0;
@@ -726,11 +727,15 @@ function mw_getRecentAssignments($args) {
 
         );
 
+	//get user thumbnail
+	$avatar = get_gravatar_url( $author_email );
+
         $entry_index = count( $struct ) - 1;
 	//get assignment thumbnail
 	$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($entry['ID']), 'thumbnail' );
 	$url = $thumb['0'];
-        $struct[ $entry_index ][ 'wp_post_thumbnail' ] = $url; //get_post_thumbnail_id( $entry['ID'] );
+        $struct[ $entry_index ][ 'user_thumbnail' ] = $avatar;
+	$struct[ $entry_index ][ 'wp_post_thumbnail' ] = $url; //get_post_thumbnail_id( $entry['ID'] );
 
     }
 
@@ -742,6 +747,11 @@ function mw_getRecentAssignments($args) {
 
     return $recent_posts;
 
+}
+
+function get_gravatar_url( $email ) {
+    $hash = md5( strtolower( trim ( $email ) ) );
+    return 'http://gravatar.com/avatar/' . $hash;
 }
 
 function _convert_date( $date ) {
