@@ -727,7 +727,10 @@ function mw_getRecentAssignments($args) {
         );
 
         $entry_index = count( $struct ) - 1;
-        $struct[ $entry_index ][ 'wp_post_thumbnail' ] = get_post_thumbnail_id( $entry['ID'] );
+	//get assignment thumbnail
+	$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($entry['ID']), 'thumbnail' );
+	$url = $thumb['0'];
+        $struct[ $entry_index ][ 'wp_post_thumbnail' ] = $url; //get_post_thumbnail_id( $entry['ID'] );
 
     }
 
