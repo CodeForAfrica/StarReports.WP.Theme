@@ -206,3 +206,7 @@ require get_template_directory().'/inc/assignments.php';
  * Admin Modifications
  */
 require get_template_directory().'/inc/dashboard.php';
+/*
+ * Lessons post type
+ */
+require get_template_directory().'/inc/lessons.php';
