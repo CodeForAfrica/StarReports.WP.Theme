@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0aba7f99-a943-42b0-9f5f-1cbe6b6082d9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/inc/gcm_stuff.php" afterPath="$PROJECT_DIR$/inc/gcm_stuff.php" />
-    </list>
+    <list default="true" id="0aba7f99-a943-42b0-9f5f-1cbe6b6082d9" name="Default" comment="" />
     <ignored path="StarReports.WP.Theme.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
