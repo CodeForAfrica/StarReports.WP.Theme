@@ -115,49 +115,6 @@ function assignment_type_box() {
     );
 }
 
-function send_push_notification($registration_ids, $message) {
-
-
-    // Set POST variables
-    $url = 'https://android.googleapis.com/gcm/send';
-
-    $fields = array(
-        'registration_ids' => $registration_ids,
-        'data' => $message,
-    );
-
-    define("GOOGLE_API_KEY", "AIzaSyB7kt9gh8p6cVu5lpK-NF_4AFVpO8A_nfA");
-
-    $headers = array(
-        'Authorization: key=' . GOOGLE_API_KEY,
-        'Content-Type: application/json'
-    );
-    //print_r($headers);
-    // Open connection
-    $ch = curl_init();
-
-    // Set the url, number of POST vars, POST data
-    curl_setopt($ch, CURLOPT_URL, $url);
-
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    // Disabling SSL Certificate support temporarly
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-
-    // Execute post
-    $result = curl_exec($ch);
-    if ($result === FALSE) {
-        die('Curl failed: ' . curl_error($ch));
-    }
-
-    // Close connection
-    curl_close($ch);
-}
-
 function assignment_type_box_content( $post ) {
     wp_nonce_field( plugin_basename( __FILE__ ), 'assignment_type_box_content_nonce' );
     $assignment_type = get_post_meta( get_the_ID(), 'assignment_type', true);
@@ -219,29 +176,14 @@ function assignment_type_box_save( $post_id ) {
 
         $pushMessage = get_the_title($post_id);
 
-        $reg_ids = users_gcm_ids();//array("APA91bEXRkRjkaJCmvdh09SeGHjz3--nOrSC7K6tNfS6aOX4JbBk_-UfUPQMfamV0J7cEr6birJ9VFVJzj90er4da6alucD1L_Qa3Nh_74IIHgJBOfceyMVNqVT0-Tb7SA2z2OORCsud8dfl4LSM1leGUEBHmuoO6cGnHWbEJ8WEAF7YTPsfvYA");
-        $message = array("price" => $pushMessage);
-
+        $reg_ids = users_gcm_ids();
+        $message = array("assignment" => $pushMessage);
         send_push_notification($reg_ids, $message);
     }
 
 }
 
-function users_gcm_ids(){
 
-    $ids = array();
-
-    $blog_users = get_users(array());
-
-    foreach ( $blog_users as $user ) {
-        $user_gcm_id = get_user_meta($user->ID, 'gcm_id', true);
-        if(!empty($user_gcm_id)){
-            $ids[] = $user_gcm_id;
-        }
-    }
-
-    return $ids;
-}
 
 //add location meta data
 add_action( 'add_meta_boxes', 'assignment_location_box' );

@@ -248,43 +248,50 @@ function remove_dashboard_meta() {
 add_action( 'admin_init', 'remove_dashboard_meta' );
 
 
-function stats_add_dashboard_widgets() {
+function summary_add_dashboard_widgets() {
 
     wp_add_dashboard_widget(
         'stats_dashboard_widget',         // Widget slug.
-        'Statistics',         // Title.
-        'stats_dashboard_widget_function' // Display function.
+        'Summary',         // Title.
+        'summary_dashboard_widget_function' // Display function.
     );
 }
-add_action( 'wp_dashboard_setup', 'stats_add_dashboard_widgets' );
+add_action( 'wp_dashboard_setup', 'summary_add_dashboard_widgets' );
 
 /**
  * Create the function to output the contents of our Dashboard Widget.
  */
-function stats_dashboard_widget_function() {
+function summary_dashboard_widget_function() {
 
-    // Display whatever it is you want to show.
-    echo "General stats go here!";
+
 }
 
 
-function myassignments_add_dashboard_widgets() {
+function journalists_dashboard_widgets() {
 
     wp_add_dashboard_widget(
-        'myassignments_dashboard_widget',         // Widget slug.
-        'My assignments',         // Title.
-        'myassignments_dashboard_widget_function' // Display function.
+        'journalists_dashboard_widget',         // Widget slug.
+        'Journalists',         // Title.
+        'journalists_dashboard_widget_function' // Display function.
     );
 }
-add_action( 'wp_dashboard_setup', 'myassignments_add_dashboard_widgets' );
+add_action( 'wp_dashboard_setup', 'journalists_dashboard_widgets' );
 
 /**
  * Create the function to output the contents of our Dashboard Widget.
  */
-function myassignments_dashboard_widget_function() {
+function journalists_dashboard_widget_function() {
 
-    // Display whatever it is you want to show.
-    echo "Assignments created by me";
+    $blogusers = get_users( 'blog_id=1&orderby=nicename&role=Author' );
+    // Array of Journalists.
+    $i = 0;
+    foreach ( $blogusers as $user ) {
+        if($i<1)
+            print_r($user);
+            print '<span>' . esc_html( $user->user_email ) . '</span>';
+        $i++;
+    }
+
 }
 
 //add post featured

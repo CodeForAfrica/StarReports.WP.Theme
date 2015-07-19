@@ -210,3 +210,7 @@ require get_template_directory().'/inc/dashboard.php';
  * Lessons post type
  */
 require get_template_directory().'/inc/lessons.php';
+/*
+ * GCM Stuff
+ */
+require get_template_directory().'/inc/gcm_stuff.php';
