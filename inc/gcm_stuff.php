@@ -1,6 +1,35 @@
 <?php
 
 /*
+ * Create Message Content Type
+ */
+function messages() {
+    $labels = array(
+        'name'               => _x( 'Messages', 'post type general name' ),
+        'singular_name'      => _x( 'Message', 'post type singular name' ),
+        'add_new'            => _x( 'Compose New', 'message' ),
+        'add_new_item'       => __( 'Compose New Message' ),
+        'new_item'           => __( 'New Message' ),
+        'all_items'          => __( 'All Messages' ),
+        'view_item'          => __( 'View Messages' ),
+        'search_items'       => __( 'Search Messages' ),
+        'not_found'          => __( 'No messages found' ),
+        'not_found_in_trash' => __( 'No messages found in the Trash' ),
+        'parent_item_colon'  => '',
+        'menu_name'          => 'Messages'
+    );
+    $args = array(
+        'labels'        => $labels,
+        'description'   => 'Defines message structure',
+        'public'        => false,
+        'menu_position' => 6,
+        'supports'      => array( 'title'),
+        'has_archive'   => false,
+    );
+    register_post_type( 'messages', $args );
+}
+add_action( 'init', 'messages' );
+/*
  * Send feedback after comment posted
  */
 
