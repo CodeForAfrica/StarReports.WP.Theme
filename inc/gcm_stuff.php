@@ -89,7 +89,7 @@ function recipient_box_save( $post_id ) {
     if(empty($notified)){
         update_post_meta( $post_id, 'notified', "1" );
 
-        $pushMessage = get_the_title($post_id);
+        $pushMessage = "admin: ".get_the_title($post_id);
 
         $reg_ids = users_gcm_ids($recipient);
         $message = array("chat" => $pushMessage);
