@@ -177,7 +177,7 @@ function assignment_type_box_save( $post_id ) {
         $pushMessage = get_the_title($post_id);
 
         $reg_ids = users_gcm_ids();
-        $message = array("assignment" => $pushMessage);
+        $message = array("assignment" => $pushMessage, "assignmentID"=>$post_id);
         send_push_notification($reg_ids, $message);
     }
 
