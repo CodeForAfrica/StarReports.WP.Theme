@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0aba7f99-a943-42b0-9f5f-1cbe6b6082d9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/inc/assignments.php" afterPath="$PROJECT_DIR$/inc/assignments.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
     </list>
     <ignored path="StarReports.WP.Theme.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,8 +47,8 @@
       <file leaf-file-name="assignments.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/inc/assignments.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43515357">
-              <caret line="179" column="79" selection-start-line="179" selection-start-column="79" selection-end-line="179" selection-end-column="79" />
+            <state vertical-scroll-proportion="0.30716723">
+              <caret line="178" column="35" selection-start-line="178" selection-start-column="35" selection-end-line="178" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -420,8 +419,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/inc/assignments.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43515357">
-          <caret line="179" column="79" selection-start-line="179" selection-start-column="79" selection-end-line="179" selection-end-column="79" />
+        <state vertical-scroll-proportion="0.30716723">
+          <caret line="178" column="35" selection-start-line="178" selection-start-column="35" selection-end-line="178" selection-end-column="35" />
           <folding />
         </state>
       </provider>
