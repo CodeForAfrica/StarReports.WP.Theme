@@ -177,7 +177,7 @@ function assignment_type_box_save( $post_id ) {
         $pushMessage = get_the_title($post_id);
 
         $reg_ids = users_gcm_ids();
-        $deadline = get_post_meta( get_the_ID(), 'assignment_date', true);
+        $deadline = get_post_meta( $post_id, 'assignment_date', true);
 
         $message = array("assignment" => $pushMessage, "assignmentID"=>$post_id, "assignmentDeadline"=>$deadline);
         send_push_notification($reg_ids, $message);
