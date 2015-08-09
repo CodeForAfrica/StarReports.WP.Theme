@@ -89,10 +89,10 @@ function recipient_box_save( $post_id ) {
     if(empty($notified)){
         update_post_meta( $post_id, 'notified', "1" );
 
-        $pushMessage = "admin: ".get_the_title($post_id);
+        $pushMessage = get_the_title($post_id);
 
         $reg_ids = users_gcm_ids($recipient);
-        $message = array("chat" => $pushMessage);
+        $message = array("chat" => $pushMessage, "user"=>"admin");
         send_push_notification($reg_ids, $message);
     }
 }
@@ -107,22 +107,26 @@ function send_feedback_after_comment($comment_id){
     $comment = get_comment($comment_id);
 
     $author = $comment->comment_author;
-    $raw_message =$author.": ".$comment->comment_content;
+    $raw_message = $comment->comment_content;
 
     //get author of original post
     $post_id = $comment->comment_post_ID;
     $post = get_post($post_id);
     $author_id = $post->post_author;
 
-    $message = array("feedback" => $raw_message);
+    //get comment author gravatar
+    $author = get_user_by('login', $author);
+    $author_email = $author->user_email;
+    $gravatar = get_gravatar_url($author_email);
+
+    $message = array("feedback" => $raw_message, "author"=>$author, "icon_url"=>$gravatar);
     send_push_notification(users_gcm_ids($author_id), $message);
 }
+add_action('comment_post', 'send_feedback_after_comment', 10, 3);
 
 /*
  * Get all users GCM ID
  */
-
-add_action('comment_post', 'send_feedback_after_comment', 10, 3);
 
 function users_gcm_ids($user_id=null){
     $ids = array();
@@ -190,4 +194,13 @@ function send_push_notification($registration_ids, $message) {
 
     // Close connection
     curl_close($ch);
+}
+/*
+ * Get user gravatars for notifications
+ */
+
+
+function get_gravatar_url( $email ) {
+    $hash = md5( strtolower( trim ( $email ) ) );
+    return 'http://gravatar.com/avatar/' . $hash;
 }

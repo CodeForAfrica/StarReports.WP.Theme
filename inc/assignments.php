@@ -693,11 +693,6 @@ function mw_getRecentAssignments($args) {
 
 }
 
-function get_gravatar_url( $email ) {
-    $hash = md5( strtolower( trim ( $email ) ) );
-    return 'http://gravatar.com/avatar/' . $hash;
-}
-
 function _convert_date( $date ) {
     if ( $date === '0000-00-00 00:00:00' ) {
         return new IXR_Date( '00000000T00:00:00Z' );
