@@ -1,17 +1,5 @@
 <?php
 
-/**
- * Dynamically increase allowed memory limit for XML-RPC only.
- *
- * @param array $methods
- * @return array
- */
-function higher_mem_xmlrpc($methods) {
-    ini_set('memory_limit', '256M');
-    return $methods;
-}
-add_action('xmlrpc_methods', 'higher_mem_xmlrpc');
-
 function lesson() {
     $labels = array(
         'name'               => _x( 'Lessons', 'post type general name' ),
@@ -230,25 +218,4 @@ function mw_getLessons($args) {
     return $recent_posts;
 
 }
-
-function get_gravatar_url( $email ) {
-    $hash = md5( strtolower( trim ( $email ) ) );
-    return 'http://gravatar.com/avatar/' . $hash;
-}
-
-function _convert_date( $date ) {
-    if ( $date === '0000-00-00 00:00:00' ) {
-        return new IXR_Date( '00000000T00:00:00Z' );
-    }
-    return new IXR_Date( mysql2date( 'Ymd\TH:i:s', $date, false ) );
-}
-
-function _convert_date_gmt( $date_gmt, $date ) {
-    if ( $date !== '0000-00-00 00:00:00' && $date_gmt === '0000-00-00 00:00:00' ) {
-        return new IXR_Date( get_gmt_from_date( mysql2date( 'Y-m-d H:i:s', $date, false ), 'Ymd\TH:i:s' ) );
-    }
-    return _convert_date( $date_gmt );
-}
-
-
 ?>
