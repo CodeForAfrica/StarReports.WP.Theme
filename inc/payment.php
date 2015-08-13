@@ -63,9 +63,10 @@ function pay_user_box_content( $post ) {
         print "Payment hasn't been made yet!";
     }
     ?>
-    MPESA confirmation number:
-    <br />
-    <input name="mpesa_confirmation" value="<?php print $pay_user?>">
+    <p>
+        MPESA confirmation number:
+        <input name="mpesa_confirmation" value="<?php print $pay_user?>">
+    </p>
 
     <?php
 }
@@ -92,18 +93,24 @@ function pay_user_box_save( $post_id ) {
 
     update_post_meta( $post_id, 'mpesa_confirmation', $mpesa_confirmation );
 
-    //update user if value changed
-    //send push notification if value has changed
-    //message = "Admin confirmed payment for %post title with receipt number %mpesa"
-    //to post author
+    /*
+        update user if value changed
+        send push notification if value has changed
+        message = "Admin confirmed payment for %post_title with receipt number %mpesa_confirmation"
+        to post author
+    */
 
     if($old_value != $mpesa_confirmation) {
 
-        $pushMessage = "Admin confirmed payment for [" . $_POST['post_title'] . "] with receipt number " . $mpesa_confirmation;
+        $pushMessage = "Admin confirmed payment for [ " . $_POST['post_title'] . " ] with receipt number " . $mpesa_confirmation;
 
-        $reg_ids = author_gcm_id($post_id);
+        $post = get_post($post_id);
+        $author_id = $post->post_author;
+        
+        $reg_ids = users_gcm_ids($author_id);
 
         $message = array("payment" => $pushMessage, "post_id" => $post_id, "receipt" => $mpesa_confirmation);
         send_push_notification($reg_ids, $message);
     }
 }
+
