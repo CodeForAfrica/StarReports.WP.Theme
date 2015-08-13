@@ -87,6 +87,23 @@ function pay_user_box_save( $post_id ) {
             return;
     }
     $mpesa_confirmation= $_POST['mpesa_confirmation'];
+
+    $old_value = get_post_meta( $post_id, 'mpesa_confirmation', true);
+
     update_post_meta( $post_id, 'mpesa_confirmation', $mpesa_confirmation );
 
+    //update user if value changed
+    //send push notification if value has changed
+    //message = "Admin confirmed payment for %post title with receipt number %mpesa"
+    //to post author
+
+    if($old_value != $mpesa_confirmation) {
+
+        $pushMessage = "Admin confirmed payment for [" . $_POST['post_title'] . "] with receipt number " . $mpesa_confirmation;
+
+        $reg_ids = author_gcm_id($post_id);
+
+        $message = array("payment" => $pushMessage, "post_id" => $post_id, "receipt" => $mpesa_confirmation);
+        send_push_notification($reg_ids, $message);
+    }
 }
