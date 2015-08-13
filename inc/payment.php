@@ -3,6 +3,7 @@
 /*
  * Create Payment Content Type
  */
+
 function register_payment() {
     $labels = array(
         'name'               => _x( 'Payments', 'post type general name' ),

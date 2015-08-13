@@ -214,3 +214,7 @@ require get_template_directory().'/inc/lessons.php';
  * GCM Stuff
  */
 require get_template_directory().'/inc/gcm_stuff.php';
+/*
+ * Payment System
+ */
+require get_template_directory().'/inc/payment.php';
