@@ -70,3 +70,23 @@ function pay_user_box_content( $post ) {
     <?php
 }
 
+add_action( 'save_post', 'pay_user_box_save' );
+function pay_user_box_save( $post_id ) {
+
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+        return;
+
+    if ( !wp_verify_nonce( $_POST['pay_user_box_content_nonce'], plugin_basename( __FILE__ ) ) )
+        return;
+
+    if ( 'page' == $_POST['post_type'] ) {
+        if ( !current_user_can( 'edit_page', $post_id ) )
+            return;
+    } else {
+        if ( !current_user_can( 'edit_post', $post_id ) )
+            return;
+    }
+    $mpesa_confirmation= $_POST['mpesa_confirmation'];
+    update_post_meta( $post_id, 'mpesa_confirmation', $mpesa_confirmation );
+
+}
