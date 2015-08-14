@@ -111,22 +111,24 @@ function pay_user_box_save( $post_id ) {
 
         $message = array("payment" => $pushMessage, "post_id" => $post_id, "receipt" => $mpesa_confirmation);
         send_push_notification($reg_ids, $message);
-    }
-    /*
-     * create post type payment
-     */
 
-    $payment_post_id = wp_insert_post(
-        array(
-            'comment_status'	=>	'closed',
-            'ping_status'		=>	'closed',
-            'post_author'		=>	'admin',
-            'post_title'		=>	$pushMessage,
-            'post_status'		=>	'draft',
-            'post_type'		=>	'payment'
-        )
-    );
-    update_post_meta( $payment_post_id, 'receipt', $mpesa_confirmation );
-    update_post_meta( $payment_post_id, 'user', $author_id );
+
+        /*
+         * create post type payment
+         */
+
+        $payment_post_id = wp_insert_post(
+            array(
+                'comment_status'	=>	'closed',
+                'ping_status'		=>	'closed',
+                'post_author'		=>	'admin',
+                'post_title'		=>	$pushMessage,
+                'post_status'		=>	'draft',
+                'post_type'		=>	'payment'
+            )
+        );
+        update_post_meta( $payment_post_id, 'receipt', $mpesa_confirmation );
+        update_post_meta( $payment_post_id, 'user', $author_id );
+    }
 }
 
