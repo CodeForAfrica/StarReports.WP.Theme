@@ -24,7 +24,7 @@ function register_payment() {
         'description'   => 'Defines payment structure',
         'public'        => true,
         'menu_position' => 6,
-        'supports'      => array( 'title'),
+        'supports'      => array( 'title', 'custom-fields'),
         'has_archive'   => false,
     );
     register_post_type( 'payment', $args );
