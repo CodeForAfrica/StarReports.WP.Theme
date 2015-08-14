@@ -117,11 +117,6 @@ function pay_user_box_save( $post_id )
         $post = get_post($post_id);
         $author_id = $post->post_author;
 
-        $reg_ids = users_gcm_ids($author_id);
-
-        $message = array("payment" => $pushMessage, "post_id" => $post_id, "receipt" => $mpesa_confirmation);
-        send_push_notification($reg_ids, $message);
-
         /*
          * create post type payment
          */
@@ -139,14 +134,26 @@ function pay_user_box_save( $post_id )
 
         update_post_meta( $payment_post_id, 'receipt', $mpesa_confirmation );
         update_post_meta( $payment_post_id, 'user', $author_id );
+        update_post_meta( $payment_post_id, 'post_id', $post_id );
 
+        /*
+         * Send notification
+         */
+
+        $reg_ids = users_gcm_ids($author_id);
+
+        $message = array("payment" => $pushMessage, "post_id" => $post_id, "receipt" => $mpesa_confirmation, "payment_id" => $payment_post_id);
+        send_push_notification($reg_ids, $message);
 
     }
 }
 
 
-function confirm_payment($post_id, $confirm){
+function confirm_payment($post_id, $payment_post_id, $confirm){
 
+    //update post
     update_post_meta( $post_id, 'confirm', $confirm );
 
+    //update payment post
+    update_post_meta( $payment_post_id, 'confirm', $confirm );
 }
