@@ -59,8 +59,17 @@ function pay_user_box_content( $post ) {
 
     wp_nonce_field( plugin_basename( __FILE__ ), 'pay_user_box_content_nonce' );
     $pay_user = get_post_meta( get_the_ID(), 'mpesa_confirmation', true);
+    $confirm = get_post_meta( get_the_ID(), 'confirm', true);
     if(empty($pay_user)){
         print "Payment hasn't been made yet!";
+    }else{
+        if(!empty($confirm)){
+            if($confirm == "1"){
+                print "Receipt has been confirmed!";
+            }else{
+                print "Payment disputed by user. Please follow up!";
+            }
+        }
     }
     ?>
     <p>
@@ -72,26 +81,27 @@ function pay_user_box_content( $post ) {
 }
 
 add_action( 'save_post', 'pay_user_box_save' );
-function pay_user_box_save( $post_id ) {
+function pay_user_box_save( $post_id )
+{
 
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
         return;
 
-    if ( !wp_verify_nonce( $_POST['pay_user_box_content_nonce'], plugin_basename( __FILE__ ) ) )
+    if (!wp_verify_nonce($_POST['pay_user_box_content_nonce'], plugin_basename(__FILE__)))
         return;
 
-    if ( 'page' == $_POST['post_type'] ) {
-        if ( !current_user_can( 'edit_page', $post_id ) )
+    if ('page' == $_POST['post_type']) {
+        if (!current_user_can('edit_page', $post_id))
             return;
     } else {
-        if ( !current_user_can( 'edit_post', $post_id ) )
+        if (!current_user_can('edit_post', $post_id))
             return;
     }
-    $mpesa_confirmation= $_POST['mpesa_confirmation'];
+    $mpesa_confirmation = $_POST['mpesa_confirmation'];
 
-    $old_value = get_post_meta( $post_id, 'mpesa_confirmation', true);
+    $old_value = get_post_meta($post_id, 'mpesa_confirmation', true);
 
-    update_post_meta( $post_id, 'mpesa_confirmation', $mpesa_confirmation );
+    update_post_meta($post_id, 'mpesa_confirmation', $mpesa_confirmation);
 
     /*
         update user if value changed
@@ -100,9 +110,9 @@ function pay_user_box_save( $post_id ) {
         to post author
     */
 
-    if($old_value != $mpesa_confirmation) {
+    if ($old_value != $mpesa_confirmation) {
 
-        $pushMessage = "Receipt: " . $mpesa_confirmation. " for [ " . $_POST['post_title'] . " ]";
+        $pushMessage = "Receipt: " . $mpesa_confirmation . " for [ " . $_POST['post_title'] . " ]";
 
         $post = get_post($post_id);
         $author_id = $post->post_author;
@@ -111,7 +121,6 @@ function pay_user_box_save( $post_id ) {
 
         $message = array("payment" => $pushMessage, "post_id" => $post_id, "receipt" => $mpesa_confirmation);
         send_push_notification($reg_ids, $message);
-
 
         /*
          * create post type payment
@@ -127,8 +136,17 @@ function pay_user_box_save( $post_id ) {
                 'post_type'		=>	'payment'
             )
         );
+
         update_post_meta( $payment_post_id, 'receipt', $mpesa_confirmation );
         update_post_meta( $payment_post_id, 'user', $author_id );
+
+
     }
 }
 
+
+function confirm_payment($post_id, $confirm){
+
+    update_post_meta( $post_id, 'confirm', $confirm );
+
+}
