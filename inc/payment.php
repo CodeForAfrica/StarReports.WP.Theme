@@ -102,11 +102,11 @@ function pay_user_box_save( $post_id ) {
 
     if($old_value != $mpesa_confirmation) {
 
-        $pushMessage = "Admin confirmed payment for [ " . $_POST['post_title'] . " ] with receipt number " . $mpesa_confirmation;
+        $pushMessage = "Receipt: " . $mpesa_confirmation. " for [ " . $_POST['post_title'] . " ]";
 
         $post = get_post($post_id);
         $author_id = $post->post_author;
-        
+
         $reg_ids = users_gcm_ids($author_id);
 
         $message = array("payment" => $pushMessage, "post_id" => $post_id, "receipt" => $mpesa_confirmation);
