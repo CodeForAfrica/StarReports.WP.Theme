@@ -29,12 +29,16 @@ function register_payment() {
     );
     register_post_type( 'payment', $args );
 }
+
 add_action( 'init', 'register_payment' );
 
-
 /*
- * Add pay box to post
+ * Add pay box WP Admin ajax style
  */
+
+
+add_action('wp_ajax_pay_user_box_save','pay_user_box_save');
+add_action('wp_ajax_nopriv_pay_user_box_save','pay_user_box_save');
 
 add_action( 'add_meta_boxes', 'pay_user_box' );
 function pay_user_box() {
@@ -57,7 +61,6 @@ function pay_user_box_content( $post ) {
      * Show dispute, if any
      */
 
-    wp_nonce_field( plugin_basename( __FILE__ ), 'pay_user_box_content_nonce' );
     $pay_user = get_post_meta( get_the_ID(), 'mpesa_confirmation', true);
     $confirm = get_post_meta( get_the_ID(), 'confirm', true);
     if(empty($pay_user)){
@@ -74,34 +77,47 @@ function pay_user_box_content( $post ) {
     ?>
     <p>
         MPESA confirmation number:
-        <input name="mpesa_confirmation" value="<?php print $pay_user?>">
+        <input id="mpesa_confirmation" value="<?php print $pay_user?>">
+        <input id="submit_payment" type="button" class="button button-primary button-large" value="Submit Payment">
     </p>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function(e) {
+            jQuery(document).one('click','#submit_payment',function(e){
+                e.preventDefault();
+                var post_id = <?php echo get_the_ID(); ?>;
+                var mpesa_confirmation = jQuery("#mpesa_confirmation").val();
+                var title = <?php echo urlencode(get_the_title()); ?>;
+                var data = {
+                    'action': 'pay_user_box_save',
+                    'post_id': post_id,
+                    'mpesa_confirmation':mpesa_confirmation,
+                    'title':title,
+                };
+                // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+                jQuery.post(ajaxurl, data, function(response) {
+                    alert('Custom Field Value is: ' + response);
+                    //Here you can do whatever you want with your returned value
+                });
+            });
+        });
+    </script>
 
     <?php
 }
 
-add_action( 'save_post', 'pay_user_box_save' );
-function pay_user_box_save( $post_id )
+
+function pay_user_box_save()
 {
 
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-        return;
-
-    if (!wp_verify_nonce($_POST['pay_user_box_content_nonce'], plugin_basename(__FILE__)))
-        return;
-
-    if ('page' == $_POST['post_type']) {
-        if (!current_user_can('edit_page', $post_id))
-            return;
-    } else {
-        if (!current_user_can('edit_post', $post_id))
-            return;
-    }
     $mpesa_confirmation = $_POST['mpesa_confirmation'];
+    $post_id = $_POST['post_id'];
+    $title = urldecode($_POST['title']);
 
     $old_value = get_post_meta($post_id, 'mpesa_confirmation', true);
 
     update_post_meta($post_id, 'mpesa_confirmation', $mpesa_confirmation);
+
 
     /*
         update user
@@ -111,17 +127,18 @@ function pay_user_box_save( $post_id )
     */
 
     if ($old_value != $mpesa_confirmation) {
-        
+
         update_post_meta($post_id, 'confirm', "0");
 
-        $pushMessage = "Receipt: " . $mpesa_confirmation . " for [ " . $_POST['post_title'] . " ]";
+        $pushMessage = "Receipt: " . $mpesa_confirmation . " for [" . $title . "]";
 
         $post = get_post($post_id);
         $author_id = $post->post_author;
 
         /*
-         * create post type payment
+         * Create post type payment
          */
+
         if( null == get_page_by_title( $pushMessage ) ){
 
             $payment_post_id = wp_insert_post(
@@ -139,17 +156,18 @@ function pay_user_box_save( $post_id )
             update_post_meta($payment_post_id, 'user', $author_id);
             update_post_meta($payment_post_id, 'post_id', $post_id);
 
-            /*
-             * Send notification
-             */
-
-            $reg_ids = users_gcm_ids($author_id);
-
-            $message = array("payment" => $pushMessage, "post_id" => $post_id, "receipt" => $mpesa_confirmation, "payment_id" => $payment_post_id);
-            send_push_notification($reg_ids, $message);
-
         }
+
+        /*
+         * Send notification
+         */
+
+        $reg_ids = users_gcm_ids($author_id);
+
+        $message = array("payment" => $pushMessage, "post_id" => $post_id, "receipt" => $mpesa_confirmation, "payment_id" => $payment_post_id);
+        send_push_notification($reg_ids, $message);
     }
+    die();
 }
 
 
@@ -161,3 +179,5 @@ function confirm_payment($post_id, $payment_post_id, $confirm){
     //update payment post
     update_post_meta( $payment_post_id, 'confirm', $confirm );
 }
+?>
+
