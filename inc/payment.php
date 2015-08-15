@@ -43,6 +43,7 @@ function my_edit_payment_columns( $columns ) {
 	    'cb' => '<input type="checkbox" />',
 		'title' => __( 'Payment' ),
 		'confirmed' => __( 'Confirmed' ),
+		'pay_amount' => __( 'Amount' ),
 		'date' => __( 'Date' )
 	);
 
@@ -64,6 +65,16 @@ function payment_columns( $column, $post_id ) {
                 }
             }else {
                 _e( 'Not confirmed', 'your_text_domain' );
+            }
+
+            break;
+        case 'pay_amount':
+            $pay_amount = get_post_meta( $post_id, 'pay_amount', true);
+
+            if(!empty($pay_amount)){
+                print $pay_amount;
+            }else {
+                _e( 'Not indicated!', 'your_text_domain' );
             }
         break;
 	}
@@ -116,6 +127,7 @@ function pay_user_box_content( $post ) {
     <p>
         MPESA confirmation number:
         <input id="mpesa_confirmation" value="<?php print $pay_user?>"<?php if($confirm == "1") echo " disabled"?>>
+        <br />
         Amount
         <input id="pay_amount" value="<?php print $pay_amount?>"<?php if($confirm == "1") echo " disabled"?>>
 
