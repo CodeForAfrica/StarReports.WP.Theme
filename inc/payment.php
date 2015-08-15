@@ -316,5 +316,25 @@ function confirm_payment($post_id, $payment_post_id, $confirm){
 
     //update payment post
     update_post_meta( $payment_post_id, 'confirm', $confirm );
+
+    //send message admin with confirmation status
+    if($confirm == 1){
+        $message = "Payment for ".$post_id." confirmed!";
+    }else{
+        $message = "Payment for ".$post_id." disuted!";
+    }
+    $payment_post_id = wp_insert_post(
+                array(
+                    'comment_status' => 'closed',
+                    'ping_status' => 'closed',
+                    'post_author' => 'admin',
+                    'post_title' => $message,
+                    'post_status' => 'draft',
+                    'post_type' => 'message'
+                )
+    );
+    //leave out notifications for now
+    update_post_meta( $payment_post_id, 'notified', "1" );
+
 }
 ?>
