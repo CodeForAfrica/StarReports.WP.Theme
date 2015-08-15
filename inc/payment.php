@@ -79,6 +79,9 @@ function pay_user_box_content( $post ) {
         MPESA confirmation number:
         <input id="mpesa_confirmation" value="<?php print $pay_user?>">
         <input id="submit_payment" type="button" class="button button-primary button-large" value="Submit Payment">
+        <div id="payment">
+
+        </div>
     </p>
 
     <script type="text/javascript">
@@ -87,7 +90,7 @@ function pay_user_box_content( $post ) {
                 e.preventDefault();
                 var post_id = <?php echo get_the_ID(); ?>;
                 var mpesa_confirmation = jQuery("#mpesa_confirmation").val();
-                var title = <?php echo urlencode(get_the_title()); ?>;
+                var title = "<?php echo get_the_title(); ?>";
                 var data = {
                     'action': 'pay_user_box_save',
                     'post_id': post_id,
@@ -96,8 +99,9 @@ function pay_user_box_content( $post ) {
                 };
                 // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
                 jQuery.post(ajaxurl, data, function(response) {
-                    alert('Custom Field Value is: ' + response);
-                    //Here you can do whatever you want with your returned value
+                    //id of payment is returned and shown
+                    jQuery("#payment").html("<a href=\"post.php?post=" + response + "&action=edit\">View payment</a>");
+
                 });
             });
         });
@@ -112,7 +116,7 @@ function pay_user_box_save()
 
     $mpesa_confirmation = $_POST['mpesa_confirmation'];
     $post_id = $_POST['post_id'];
-    $title = urldecode($_POST['title']);
+    $title = $_POST['title'];
 
     $old_value = get_post_meta($post_id, 'mpesa_confirmation', true);
 
@@ -156,6 +160,8 @@ function pay_user_box_save()
             update_post_meta($payment_post_id, 'user', $author_id);
             update_post_meta($payment_post_id, 'post_id', $post_id);
 
+            echo $payment_post_id;
+
         }
 
         /*
@@ -180,4 +186,3 @@ function confirm_payment($post_id, $payment_post_id, $confirm){
     update_post_meta( $payment_post_id, 'confirm', $confirm );
 }
 ?>
-
