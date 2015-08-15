@@ -78,10 +78,33 @@ function pay_user_box_content( $post ) {
     <p>
         MPESA confirmation number:
         <input id="mpesa_confirmation" value="<?php print $pay_user?>">
-        <input id="submit_payment" type="button" class="button button-primary button-large" value="Submit Payment">
+
+        <div id="pay_box">
+            <input id="submit_payment" type="button" class="button button-primary button-large" value="Submit Payment">
+        </div>
+
         <div id="payment">
 
         </div>
+        <?php
+
+            //if other payments exist, show them here
+            $args = array(
+                'post_type'=>'payment',
+                'meta_query' => array(array(
+                        'key' => 'post_id',
+                        'value' => get_the_ID(),
+                        'compare' => '='
+                    )));
+
+            foreach(query_posts($args) as $post){
+                $receipt = get_post_meta($post->ID, 'receipt', true);
+
+                print "<a href=\"post.php?post=".$post->ID. "&action=edit\">View payment: ".$receipt."</a> <br />";
+            }
+
+        ?>
+
     </p>
 
     <script type="text/javascript">
@@ -100,20 +123,18 @@ function pay_user_box_content( $post ) {
                 // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
                 jQuery.post(ajaxurl, data, function(response) {
                     //id of payment is returned and shown
-                    jQuery("#payment").html("<a href=\"post.php?post=" + response + "&action=edit\" class=\"button button-primary button-large\">View payment</a>");
+                    jQuery("#payment").html("<a href=\"post.php?post=" + response + "&action=edit\">View payment</a><br />");
                     //disable input
                     jQuery("#mpesa_confirmation").attr('disabled','disabled');
                     //hide submit payment
-                    jQuery("#submit_payment").hide();
+                    jQuery("#pay_box").hide();
 
                 });
             });
         });
     </script>
-
     <?php
 }
-
 
 function pay_user_box_save()
 {
