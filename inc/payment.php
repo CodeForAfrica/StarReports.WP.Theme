@@ -174,17 +174,21 @@ function pay_user_box_content( $post ) {
                     'pay_amount':pay_amount,
                     'title':title,
                 };
-                // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-                jQuery.post(ajaxurl, data, function(response) {
-                    //id of payment is returned and shown
-                    jQuery("#payment").html("<a href=\"post.php?post=" + response + "&action=edit\">View payment</a><br />");
-                    //disable input
-                    jQuery("#mpesa_confirmation").attr('disabled','disabled');
-                    jQuery("#pay_amount").attr('disabled','disabled');
-                    //hide submit payment
-                    jQuery("#pay_box").hide();
+                if(pay_amount == "" || mpesa_confirmation == "" pay_amount == null || mpesa_confirmation == null){
+                    alert("All fields are required!");
+                }else{
+                    // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+                    jQuery.post(ajaxurl, data, function(response) {
+                        //id of payment is returned and shown
+                        jQuery("#payment").html("<a href=\"post.php?post=" + response + "&action=edit\">View payment</a><br />");
+                        //disable input
+                        jQuery("#mpesa_confirmation").attr('disabled','disabled');
+                        jQuery("#pay_amount").attr('disabled','disabled');
+                        //hide submit payment
+                        jQuery("#pay_box").hide();
 
-                });
+                    });
+                }
             });
         });
     </script>
