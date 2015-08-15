@@ -32,7 +32,7 @@ function register_payment() {
 
 add_action( 'init', 'register_payment' );
 /*
- * Show values on
+ * Create colunms
  */
 
 add_filter( 'manage_edit-payment_columns', 'my_edit_payment_columns' ) ;
@@ -79,6 +79,49 @@ function payment_columns( $column, $post_id ) {
         break;
 	}
 }
+/*
+ * Sortable Columns
+ */
+
+add_filter( 'manage_edit-payment_sortable_columns', 'my_payment_sortable_columns' );
+
+function my_payment_sortable_columns( $columns ) {
+
+	$columns['confirmed'] = 'confirmed';
+
+	return $columns;
+}
+
+/* Only run our customization on the 'edit.php' page in the admin. */
+add_action( 'load-edit.php', 'my_edit_payment_load' );
+
+function my_edit_payment_load() {
+	add_filter( 'request', 'my_sort_payments' );
+}
+
+/* Sorts the movies. */
+function my_sort_payments( $vars ) {
+
+	/* Check if we're viewing the 'movie' post type. */
+	if ( isset( $vars['post_type'] ) && 'payment' == $vars['post_type'] ) {
+
+		/* Check if 'orderby' is set to 'confirmed'. */
+		if ( isset( $vars['orderby'] ) && 'confirmed' == $vars['orderby'] ) {
+
+			/* Merge the query vars with our custom variables. */
+			$vars = array_merge(
+				$vars,
+				array(
+					'meta_key' => 'confirm',
+					'orderby' => 'meta_value'
+				)
+			);
+		}
+	}
+
+	return $vars;
+}
+
 
 /*
  * Add pay box WP Admin ajax style
@@ -126,9 +169,11 @@ function pay_user_box_content( $post ) {
     ?>
     <p>
         MPESA confirmation number:
+        <br />
         <input id="mpesa_confirmation" value="<?php print $pay_user?>"<?php if($confirm == "1") echo " disabled"?>>
         <br />
         Amount
+        <br />
         <input id="pay_amount" value="<?php print $pay_amount?>"<?php if($confirm == "1") echo " disabled"?>>
 
         <div id="pay_box">
