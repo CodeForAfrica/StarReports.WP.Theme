@@ -104,9 +104,9 @@ function pay_user_box_save( $post_id )
     update_post_meta($post_id, 'mpesa_confirmation', $mpesa_confirmation);
 
     /*
-        update user if value changed
-        send push notification if value has changed
-        message = "Admin confirmed payment for %post_title with receipt number %mpesa_confirmation"
+        update user
+        if value changed send push notification if value has changed
+            message = "Admin confirmed payment for %post_title with receipt number %mpesa_confirmation"
         to post author
     */
 
@@ -120,31 +120,33 @@ function pay_user_box_save( $post_id )
         /*
          * create post type payment
          */
+        if( null == get_page_by_title( $pushMessage ) ){
 
-        $payment_post_id = wp_insert_post(
-            array(
-                'comment_status'	=>	'closed',
-                'ping_status'		=>	'closed',
-                'post_author'		=>	'admin',
-                'post_title'		=>	$pushMessage,
-                'post_status'		=>	'draft',
-                'post_type'		=>	'payment'
-            )
-        );
+            $payment_post_id = wp_insert_post(
+                array(
+                    'comment_status' => 'closed',
+                    'ping_status' => 'closed',
+                    'post_author' => 'admin',
+                    'post_title' => $pushMessage,
+                    'post_status' => 'draft',
+                    'post_type' => 'payment'
+                )
+            );
 
-        update_post_meta( $payment_post_id, 'receipt', $mpesa_confirmation );
-        update_post_meta( $payment_post_id, 'user', $author_id );
-        update_post_meta( $payment_post_id, 'post_id', $post_id );
+            update_post_meta($payment_post_id, 'receipt', $mpesa_confirmation);
+            update_post_meta($payment_post_id, 'user', $author_id);
+            update_post_meta($payment_post_id, 'post_id', $post_id);
 
-        /*
-         * Send notification
-         */
+            /*
+             * Send notification
+             */
 
-        $reg_ids = users_gcm_ids($author_id);
+            $reg_ids = users_gcm_ids($author_id);
 
-        $message = array("payment" => $pushMessage, "post_id" => $post_id, "receipt" => $mpesa_confirmation, "payment_id" => $payment_post_id);
-        send_push_notification($reg_ids, $message);
+            $message = array("payment" => $pushMessage, "post_id" => $post_id, "receipt" => $mpesa_confirmation, "payment_id" => $payment_post_id);
+            send_push_notification($reg_ids, $message);
 
+        }
     }
 }
 
