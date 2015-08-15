@@ -100,7 +100,11 @@ function pay_user_box_content( $post ) {
                 // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
                 jQuery.post(ajaxurl, data, function(response) {
                     //id of payment is returned and shown
-                    jQuery("#payment").html("<a href=\"post.php?post=" + response + "&action=edit\">View payment</a>");
+                    jQuery("#payment").html("<a href=\"post.php?post=" + response + "&action=edit\" class=\"button button-primary button-large\">View payment</a>");
+                    //disable input
+                    jQuery("#mpesa_confirmation").attr('disabled','disabled');
+                    //hide submit payment
+                    jQuery("#submit_payment").hide();
 
                 });
             });
