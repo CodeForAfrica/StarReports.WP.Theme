@@ -31,6 +31,43 @@ function register_payment() {
 }
 
 add_action( 'init', 'register_payment' );
+/*
+ * Show values on
+ */
+
+add_filter( 'manage_edit-payment_columns', 'my_edit_payment_columns' ) ;
+
+function my_edit_payment_columns( $columns ) {
+
+	$columns = array(
+	    'cb' => '<input type="checkbox" />',
+		'title' => __( 'Payment' ),
+		'confirmed' => __( 'Confirmed' ),
+		'date' => __( 'Date' )
+	);
+
+	return $columns;
+}
+
+add_action( 'manage_payment_posts_custom_column' , 'payment_columns', 10, 2 );
+
+function payment_columns( $column, $post_id ) {
+	switch ( $column ) {
+		case 'confirmed':
+            $confirm = get_post_meta( $post_id, 'confirm', true);
+
+            if(!empty($confirm)){
+                if($confirm == "1"){
+                    print "Confirmed!";
+                }else{
+                    print "Disputed!";
+                }
+            }else {
+                _e( 'Not confirmed', 'your_text_domain' );
+            }
+        break;
+	}
+}
 
 /*
  * Add pay box WP Admin ajax style
@@ -77,10 +114,10 @@ function pay_user_box_content( $post ) {
     ?>
     <p>
         MPESA confirmation number:
-        <input id="mpesa_confirmation" value="<?php print $pay_user?>">
+        <input id="mpesa_confirmation" value="<?php print $pay_user?>"<?php if($confirm == "1") echo " disabled"?>>
 
         <div id="pay_box">
-            <input id="submit_payment" type="button" class="button button-primary button-large" value="Submit Payment">
+            <input id="submit_payment" type="button" class="button button-primary button-large" value="Submit Payment"<?php if($confirm == "1") echo " style='display:none;'"?>>
         </div>
 
         <div id="payment">
