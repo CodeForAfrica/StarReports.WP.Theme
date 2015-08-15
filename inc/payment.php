@@ -111,6 +111,8 @@ function pay_user_box_save( $post_id )
     */
 
     if ($old_value != $mpesa_confirmation) {
+        
+        update_post_meta($post_id, 'confirm', "0");
 
         $pushMessage = "Receipt: " . $mpesa_confirmation . " for [ " . $_POST['post_title'] . " ]";
 
