@@ -219,7 +219,7 @@ function pay_user_box_content( $post ) {
                     'pay_amount':pay_amount,
                     'title':title,
                 };
-                if(pay_amount == "" || mpesa_confirmation == "" pay_amount == null || mpesa_confirmation == null){
+                if(pay_amount == "" || mpesa_confirmation == "" || pay_amount == null || mpesa_confirmation == null){
                     alert("All fields are required!");
                 }else{
                     // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
