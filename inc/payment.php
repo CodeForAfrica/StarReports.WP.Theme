@@ -155,29 +155,33 @@ function pay_user_box_content( $post ) {
     $pay_user = get_post_meta( get_the_ID(), 'mpesa_confirmation', true);
     $confirm = get_post_meta( get_the_ID(), 'confirm', true);
     $pay_amount = get_post_meta( get_the_ID(), 'pay_amount', true);
+    print "<div id='payment_status'>";
     if(empty($pay_user)){
         print "Payment hasn't been made yet!";
     }else{
         if(!empty($confirm)){
             if($confirm == "1"){
                 print "Receipt has been confirmed!";
-            }else{
+            }elseif ($confirm=="-1"){
                 print "Payment disputed by user. Please follow up!";
+            }else{
+                print "Awaiting user confirmation.";
             }
         }
     }
+    print "</div>"
     ?>
     <p>
         MPESA confirmation number:
         <br />
-        <input id="mpesa_confirmation" value="<?php print $pay_user?>"<?php if($confirm == "1") echo " disabled"?>>
+        <input id="mpesa_confirmation" value="<?php print $pay_user?>"<?php if($confirm == "1" || $confirm == "0") echo " disabled"?>>
         <br />
         Amount
         <br />
-        <input id="pay_amount" value="<?php print $pay_amount?>"<?php if($confirm == "1") echo " disabled"?>>
+        <input id="pay_amount" value="<?php print $pay_amount?>"<?php if($confirm == "1" || $confirm == "0") echo " disabled"?>>
 
         <div id="pay_box">
-            <input id="submit_payment" type="button" class="button button-primary button-large" value="Submit Payment"<?php if($confirm == "1") echo " style='display:none;'"?>>
+            <input id="submit_payment" type="button" class="button button-primary button-large" value="Submit Payment"<?php if($confirm == "1" || $confirm == "0") echo " style='display:none;'"?>>
         </div>
 
         <div id="payment">
@@ -229,6 +233,7 @@ function pay_user_box_content( $post ) {
                         //disable input
                         jQuery("#mpesa_confirmation").attr('disabled','disabled');
                         jQuery("#pay_amount").attr('disabled','disabled');
+                        jQuery("#payment_status").html("Awaiting user confirmation.");
                         //hide submit payment
                         jQuery("#pay_box").hide();
 
