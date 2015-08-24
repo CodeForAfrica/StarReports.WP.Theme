@@ -218,3 +218,7 @@ require get_template_directory().'/inc/gcm_stuff.php';
  * Payment System
  */
 require get_template_directory().'/inc/payment.php';
+/*
+ * Feedback
+ */
+require get_template_directory().'/inc/feedback.php';

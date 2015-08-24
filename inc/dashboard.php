@@ -30,6 +30,7 @@ function wpse_57350_script_enqueuer()
     <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/css/plugins/morris.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/font-awesome-4.1.0/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/css/sb-admin-2.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/css/custom-admin.css" />
 
     <style type="text/css">
         /*

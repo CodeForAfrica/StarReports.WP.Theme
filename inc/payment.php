@@ -257,7 +257,7 @@ function pay_user_box_save()
 
     update_post_meta($post_id, 'mpesa_confirmation', $mpesa_confirmation);
     update_post_meta($post_id, 'pay_amount', $pay_amount);
-
+    update_post_meta($post_id, 'confirm', "0");
 
     /*
         update user
@@ -268,7 +268,7 @@ function pay_user_box_save()
 
     if ($old_value != $mpesa_confirmation) {
 
-        update_post_meta($post_id, 'confirm', "0");
+
 
         $pushMessage = "Receipt: " . $mpesa_confirmation . " of " .$pay_amount. " for [" . $title . "]";
 
@@ -342,4 +342,124 @@ function confirm_payment($post_id, $payment_post_id, $confirm){
     update_post_meta( $payment_post_id, 'notified', "1" );
 
 }
+
+//xmlrpc stuff
+add_filter('xmlrpc_methods', 'payments_xmlrpc_methods');
+function payments_xmlrpc_methods($methods)
+{
+    $methods['metaWeblog.getPayments'] = 'mw_getPayments';
+    return $methods;
+}
+
+function mw_getPayments($args) {
+    global $wp_xmlrpc_server;
+
+    $wp_xmlrpc_server->escape($args);
+
+    $blog_ID     = (int) $args[0];
+    $username  = $args[1];
+    $password   = $args[2];
+
+    if ( isset( $args[3] ) )
+        $query = array( 'numberposts' => absint( $args[3] ), 'post_type'=>"payment");
+    else
+        $query = array('post_type'=>"payment");
+
+
+    // Let's run a check to see if credentials are okay
+    if ( !$user = $wp_xmlrpc_server->login($username, $password) ) {
+        return $wp_xmlrpc_server->error;
+    }
+
+    $posts_list = wp_get_recent_posts($query);
+
+    if ( !$posts_list )
+        return array();
+
+    $struct = array();
+
+
+    foreach ($posts_list as $entry) {
+        $post_date = _convert_date( $entry['post_date'] );
+        $post_date_gmt = _convert_date_gmt( $entry['post_date_gmt'], $entry['post_date'] );
+        $post_modified = _convert_date( $entry['post_modified'] );
+        $post_modified_gmt = _convert_date_gmt( $entry['post_modified_gmt'], $entry['post_modified'] );
+
+        $categories = array();
+        $catids = wp_get_post_categories($entry['ID']);
+        foreach( $catids as $catid )
+            $categories[] = get_cat_name($catid);
+
+        $tagnames = array();
+        $tags = wp_get_post_tags( $entry['ID'] );
+        if ( !empty( $tags ) ) {
+            foreach ( $tags as $tag ) {
+                $tagnames[] = $tag->name;
+            }
+            $tagnames = implode( ', ', $tagnames );
+        } else {
+            $tagnames = '';
+        }
+
+        $post = get_extended($entry['post_content']);
+        $link = post_permalink($entry['ID']);
+
+        // Get the post author info.
+        $author = get_userdata($entry['post_author']);
+	    $author_email = $author->user_email;
+
+        $allow_comments = ('open' == $entry['comment_status']) ? 1 : 0;
+        $allow_pings = ('open' == $entry['ping_status']) ? 1 : 0;
+
+        // Consider future posts as published
+        if ( $entry['post_status'] === 'future' )
+            $entry['post_status'] = 'publish';
+
+        // Get post format
+        $post_format = get_post_format( $entry['ID'] );
+        if ( empty( $post_format ) )
+            $post_format = 'standard';
+
+            $struct[] = array(
+
+            'dateCreated' => $post_date,
+            'userid' => $entry['post_author'],
+            'postid' => (string) $entry['ID'],
+            'description' => $post['main'],
+            'title' => $entry['post_title'],
+            'link' => $link,
+            'permaLink' => $link,
+            // commented out because no other tool seems to use this
+            // 'content' => $entry['post_content'],
+            'categories' => $categories,
+            'mt_excerpt' => $entry['post_excerpt'],
+            'mt_text_more' => $post['extended'],
+            'wp_more_text' => $post['more_text'],
+            'mt_allow_comments' => $allow_comments,
+            'mt_allow_pings' => $allow_pings,
+            'mt_keywords' => $tagnames,
+            'wp_slug' => $entry['post_name'],
+            'wp_password' => $entry['post_password'],
+            'wp_author_id' => (string) $author->ID,
+            'wp_author_display_name' => $author->display_name,
+            'date_created_gmt' => $post_date_gmt,
+            'post_status' => $entry['post_status'],
+            'custom_fields' => $wp_xmlrpc_server->get_custom_fields($entry['ID']),
+            'wp_post_format' => $post_format,
+            'date_modified' => $post_modified,
+            'date_modified_gmt' => $post_modified_gmt,
+            'sticky' => ( $entry['post_type'] === 'post' && is_sticky( $entry['ID'] ) ),
+
+        );
+    }
+
+    $recent_posts = array();
+    for ( $j=0; $j<count($struct); $j++ ) {
+        array_push($recent_posts, $struct[$j]);
+    }
+
+    return $recent_posts;
+
+}
+
 ?>
