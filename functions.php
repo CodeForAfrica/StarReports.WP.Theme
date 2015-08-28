@@ -198,27 +198,3 @@ require get_template_directory().'/inc/profitmag-functions.php';
  * Implement Custom Widgets
  */
 require get_template_directory().'/inc/profitmag-widgets.php';
-/**
- * Assignemts
- */
-require get_template_directory().'/inc/assignments.php';
-/*
- * Admin Modifications
- */
-require get_template_directory().'/inc/dashboard.php';
-/*
- * Lessons post type
- */
-require get_template_directory().'/inc/lessons.php';
-/*
- * GCM Stuff
- */
-require get_template_directory().'/inc/gcm_stuff.php';
-/*
- * Payment System
- */
-require get_template_directory().'/inc/payment.php';
-/*
- * Feedback
- */
-require get_template_directory().'/inc/feedback.php';
